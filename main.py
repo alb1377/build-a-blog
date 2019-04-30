@@ -16,8 +16,8 @@ class Blog(db.Model):
     body = db.Column(db.String(500))
 
     def __init__(self, title, body):
-        self.title
-        self.body
+        self.title = title
+        self.body = body
 
 if __name__ == '__main__':
     app.run()
