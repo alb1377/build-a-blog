@@ -19,5 +19,29 @@ class Blog(db.Model):
         self.title = title
         self.body = body
 
+@app.route('/blog', methods = ['POST', 'GET'])
+def index():
+
+    if request.method == 'POST':
+        blog_name = request.form['blog']
+        new_blog = Blog(blog_name)
+        db.session.add(new_blog)
+        db.session.commit()
+    
+    return render_template('form.html', title="Blog")
+
+
+
+
+
+
+
+@app.route('/newpost', methods =)
+
+
+
+
+
+
 if __name__ == '__main__':
     app.run()
