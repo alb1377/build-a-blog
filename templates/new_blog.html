@@ -3,9 +3,15 @@
 {% block content %}
   <h1>BLOG</h1>
   <form method='POST'>
-      <label>Blog Post:
-          <input type="" name='blog_post'/>
+      <label>Title Your Blog:
+          <input type="text" name='blog_post'/>
       </label>
+      <br>
+      <br>
+      <label for="blog">New Blog Post:</label>
+      <br>
+      <textarea id="blog" name="blog" rows ="6" cols="30">Type Blog Here</textarea>
+
       <input type="submit" value='Submit Blog'/>
   </form>
 
