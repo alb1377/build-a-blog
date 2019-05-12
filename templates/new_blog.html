@@ -4,13 +4,13 @@
   <h1>BLOG</h1>
   <form method='POST'>
       <label>Title Your Blog:
-          <input type="text" name='blog_post'/>
+          <input type="text" name='title'/>{{title}}
       </label>
       <br>
       <br>
       <label for="blog">New Blog Post:</label>
       <br>
-      <textarea id="blog" name="blog" rows ="6" cols="30">Type Blog Here</textarea>
+      <textarea id="blog" name="body" rows ="6" cols="30">Type Blog Here</textarea>{{body}}
 
       <input type="submit" value='Submit Blog'/>
   </form>

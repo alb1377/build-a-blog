@@ -1,9 +1,9 @@
 from flask import Flask, request, redirect, render_template
-from flask_sqlalchemy import flask_sqlalchemy
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
-app.config['SQLALCGEMY_DATABASE_URI'] = 'mysql+pymysql://build-a-blog:building@localhost:8889/building-a-blog'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://building-a-blog:building@localhost:8889/building-a-blog'
 app.config['SQLALCHEMY_ECHO'] = True
 
 db = SQLAlchemy(app)
@@ -19,25 +19,34 @@ class Blog(db.Model):
         self.body = body
     
     @app.route('/newpost', methods=['POST', 'GET'])
-
     def start_post():
+        title = ""
+        body = ""
+
         if request.method == 'POST':
-            new_blog = request.form['blog_post']
-            new_post = Blog(new_blog)
+            title = request.form['title']
+            body = request.form['body']
+            new_post = Blog(title, body)
             db.session.add(new_post)
             db.session.commit()
-        
-        return render_template(new_blog.html, title="Blog It Up",blog_post=blog_post)
+            
+            #return redirect('/blog?id={}'.format(new_post.id))
+        return render_template('new_blog.html')
 
-    @app.route('/blog', methods=['POST', 'GET'])
+    @app.route('/blog', methods=['GET'])
     def  blog_list():
-        if request.method == 'POST':
-            blog_list = request.form['list']
-            postings = Blog(blog_list)
-            db.session.add(postings)
-            db.session.commit()
+        b_list = Blog.query.all()
+        post_page_id = request.args.get('id')
+
+        if post_page_id == None:
+            return render_template('blog_list.html', title='My Blog List', b_list=b_list)
+        else:
+            blog = Blog.query.get(post_page_id)
+            return render_template('new_blog.html', blog=blog)
         
-        return render_template(blog_list.html, title="My Blog List")
+          
+        
+        return render_template('blog_list.html', title='My Blog List', b_list=b_list)
 
 if __name__ == '__main__':
     app.run()
